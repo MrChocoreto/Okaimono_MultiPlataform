@@ -9,9 +9,9 @@ public class DCFP
 
     #region Variables
 
-    string stg_IMF = "<mdf>\n"; // IMF = Input Main Flag
+    const string stg_IMF = "<mdf>\n"; // IMF = Input Main Flag
                                 // mdf = Main Data Flag
-    string stg_OMF = "\n</mdf>\n"; // OMF = Output Main Flag
+    const string stg_OMF = "\n</mdf>\n"; // OMF = Output Main Flag
 
     #endregion
 
@@ -57,18 +57,15 @@ public class DCFP
     string stg_CCTS(Object obt_Cls)
     {
         string stg_Result = default;
-
-        if (obt_Cls != null)
+        if (obt_Cls != null && !(obt_Cls.GetType().Name == "String") && !obt_Cls.GetType().IsPrimitive)
         {
             stg_Result = stg_IMF;
             stg_Result += $"<{obt_Cls.GetType().Name}>";
             stg_Result += stg_EIFC(obt_Cls, obt_Cls.GetType());
             stg_Result += $"\n</{obt_Cls.GetType().Name}>";
         }
-        else if(obt_Cls == null || stg_Result == null)
-        {
+        else
             stg_Result = stg_IMF;
-        }
         return stg_Result + stg_OMF;
     }
 
@@ -96,7 +93,7 @@ public class DCFP
                 // se compreba si el valor de la lista de elementos es un
                 // IEnumerable de objetos ademas de que los convierte IEnumerable
                 if (obt_field is IEnumerable<object> enumerable)
-                {
+                {  
                     // de ser cierto crea una lista con los elementos en base
                     // a los IEnumerables
                     lst_ElementsList = enumerable.ToList();
@@ -125,14 +122,12 @@ public class DCFP
                                 stg_Result += $"\n\t</{item.Name}>\n\n";
                             else
                                 stg_Result += $"\n\t</{item.Name}>";
-                            
                     }
                 } 
 
             }
             else if (!bol_IGL(item) && item.Name != "Empty")
                 stg_Result += $"\n\t<<{item.Name}: {item.GetValue(cls)}>>";
-
         }
         return stg_Result;
     }
@@ -142,44 +137,10 @@ public class DCFP
     static bool bol_IGL(FieldInfo fieldInfo)
     {
         Type fieldType = fieldInfo.FieldType;
-
-        if (fieldType.IsGenericType && fieldType.GetGenericTypeDefinition() == typeof(List<>))
-        {
-            return true;
-        }
-        return false;
+        return (fieldType.IsGenericType && fieldType.GetGenericTypeDefinition() == typeof(List<>));
     }
-
-
-
-    // EIFE = Extract Info of the Element
-    string stg_EIFE(Object obt_Element , Type type)
-    {
-        string stg_Result = default;
-        string stg_TypeOfElement = stg_OIE(obt_Element, type);
-        switch (stg_TypeOfElement)
-        {
-            case "int":
-                stg_Result = "intooooooo";
-                stg_Result = (string)obt_Element;
-            
-                break;
-            case "string":
-                stg_Result = "stringooooooo";
-                // stg_Result = (string)obt_Element;
-                break;
-            case "bool":
-                stg_Result = "boolooooooooo";
-                stg_Result = (string)obt_Element;
-                break;
-            default:
-                stg_Result = stg_TypeOfElement;
-                break;
-        }
-        return stg_Result;
-    }
-
-
+    
+    
 
     // OIE = Obtain Id by Element
     string stg_OIE(Object obt_Element, Type type)

@@ -63,7 +63,6 @@ public class FDS : MonoBehaviour
         // anime.Tags.Add("Xd");
         cls_BD.AnimeList.Add(anime);
         cls_BD.AnimeList.Add(anime);
-
         //le pasamos los datos de la clsBD al stgDOKDB_JsonObj
         stg_DOKDB_Json = cls_DCFP.ToString(cls_BD); //DCFP = Dot Choco File Parse
         // JsonUtility.ToJson(stg_DOKDB_Json);
