@@ -1,0 +1,76 @@
+Main Class: DataBase
+
+
+Name: AnimeList
+E: Anime T: Anime
+
+Atribute: Name
+Content: Unknown
+
+
+Name: Tags
+E: None T: string
+E: Xd T: string
+
+Atribute: InLive
+Content: False
+
+Atribute: NextNewCap
+Content: Never
+
+Atribute: MaxCaps
+Content: 0
+
+Atribute: LastViewCap
+Content: 0
+
+
+Name: Prequels
+E: None T: string
+
+
+Name: Sequels
+E: None T: string
+
+
+Name: Movies
+E: None T: string
+
+
+Name: SpinOffs
+E: None T: string
+
+Atribute: Ovas
+Content: 0
+
+
+Name: MangaList
+E: Manga T: Manga
+
+Atribute: Name
+Content: Unknown
+
+
+Name: Tags
+E: None T: string
+
+Atribute: OnGoing
+Content: False
+
+Atribute: MaxCaps
+Content: 0
+
+Atribute: LastViewCap
+Content: 0
+
+
+Name: Prequels
+E: None T: string
+
+
+Name: Sequels
+E: None T: string
+
+
+Name: SpinOffs
+E: None T: string
