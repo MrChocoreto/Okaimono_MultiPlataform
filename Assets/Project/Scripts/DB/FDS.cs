@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -34,6 +35,8 @@ public class FDS : MonoBehaviour
 
     void Start()
     {
+        stg_Application_Path = Application.persistentDataPath + "/Okaimono/";
+        cls_DCFP = new();
         cls_BD.AnimeList.Add(new());
         cls_BD.MangaList.Add(new());
         //Se le da una path a la variable stgApplication_Path desde el Start
@@ -42,7 +45,8 @@ public class FDS : MonoBehaviour
         stg_Application_Path = Application.persistentDataPath + "/Okaimono/";
         //Debug.Log(stgApplication_Path);
         //CreateFile();
-        SaveData();
+        // SaveData();
+        LoadData();
     }
 
 
@@ -53,12 +57,9 @@ public class FDS : MonoBehaviour
     //MDB(Manage DataBase)
     #region Methods_of_MDB
 
-    [ContextMenu("Pruebas")]
+    [ContextMenu("SaveData")]
     public void SaveData()
     {
-        stg_Application_Path = Application.persistentDataPath + "/Okaimono/";
-        cls_DCFP = new();
-        cls_BD = new();
         Anime anime = new();
         // anime.Tags.Add("Xd");
         cls_BD.AnimeList.Add(anime);
@@ -71,16 +72,19 @@ public class FDS : MonoBehaviour
         File.WriteAllText(stg_Application_Path + stgDOKDBF, stg_DOKDB_Json);
         Debug.Log(stg_DOKDB_Json);
     }
-
+    
+    
+    
+    [ContextMenu("LoadData")]
     public void LoadData()
     {
-        
+        DataBase cls_BDs = new();
         //busca el archivo en la ruta que le pasamos
         stg_DOKDB_Json = File.ReadAllText(stg_Application_Path + stgDOKDBF);
         
         //y aqui le pasa los valores a la clsBD publica 
-        cls_BD = DCFP.ToClass<DataBase>(stg_DOKDB_Json); //DCFP = Dot Choco File Parse
-        //clsBD = JsonUtility.FromJson<DataBase>(stgDOKDB_JsonObj);
+        cls_BDs = DCFP.ToClass<DataBase>(stg_DOKDB_Json); //DCFP = Dot Choco File Parse
+        // clsBD = JsonUtility.FromJson<DataBase>(stgDOKDB_JsonObj);
     }
 
 

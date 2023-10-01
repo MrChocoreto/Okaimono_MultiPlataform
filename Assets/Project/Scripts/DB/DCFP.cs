@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
+using Object = System.Object;
 
 public class DCFP
 {
@@ -10,7 +13,7 @@ public class DCFP
     #region Variables
 
     const string stg_IMF = "<mdf>\n"; // IMF = Input Main Flag
-                                // mdf = Main Data Flag
+                                      // mdf = Main Data Flag
     const string stg_OMF = "\n</mdf>\n"; // OMF = Output Main Flag
 
     #endregion
@@ -21,10 +24,10 @@ public class DCFP
 
 
     /// <summary>
-    /// Convert a obt_Cls into String Format like a Json
+    /// Convert a Class into String Format like a XML 
     /// </summary>
-    /// <param name="obt_Cls">obt_Cls of any stg_Type</param>
-    /// <returns>obt_Cls converted to String</returns>
+    /// <param name="obt_Cls">The Class that you want convert</param>
+    /// <returns>The Class converted to String</returns>
     public string ToString(Object obt_Cls)
     {
         return stg_CCTS(obt_Cls);
@@ -33,14 +36,11 @@ public class DCFP
 
 
     /// <summary>
-    /// Convert a String into obt_Cls
+    /// Convert a String into Class
     /// </summary>
-    /// <param name="stgData">String that contain the stgData</param>
-    /// <returns>String converted into stg_Type obt_Cls</returns>
-    public static T ToClass<T>(string stgData)
-    {
-        return (T)CSTC(stgData, typeof(T));
-    }
+    /// <param name="stgData">String that contain the Data</param>
+    /// <returns>String converted into the Class that you need</returns>
+    public static T ToClass<T>(string stgData) => (T)DCFP.ToClass(stgData, typeof(T));
 
 
     #endregion
@@ -53,7 +53,11 @@ public class DCFP
     #region Text_To_Class
 
 
-    // stg_CCTS = Convert obt_Cls To String
+    /// <summary>
+    /// stg_CCTS = Convert obt_Cls To String
+    /// </summary>
+    /// <param name="obt_Cls"> </param>
+    /// <returns>Result of convert your class to Text</returns>
     string stg_CCTS(Object obt_Cls)
     {
         string stg_Result = default;
@@ -70,8 +74,12 @@ public class DCFP
     }
 
 
-
-    // Extract Items From Class/List
+    /// <summary>
+    /// Extract Items From Class/List
+    /// </summary>
+    /// <param name="cls">Class/List</param>
+    /// <param name="type">Type of the Object</param>
+    /// <returns>Content of the Class</returns>
     string stg_EIFC(Object cls, Type type)
     {
         string stg_Class_List = default;
@@ -133,7 +141,12 @@ public class DCFP
     }
 
 
-    // IGL = Is a Generic List
+    
+    /// <summary>
+    /// IGL = Is a Generic List
+    /// </summary>
+    /// <param name="fieldInfo">List</param>
+    /// <returns>True or False if the field is generic or not</returns>
     static bool bol_IGL(FieldInfo fieldInfo)
     {
         Type fieldType = fieldInfo.FieldType;
@@ -142,7 +155,12 @@ public class DCFP
     
     
 
-    // OIE = Obtain Id by Element
+    /// <summary>
+    /// OIE = Obtain Id by Element
+    /// </summary>
+    /// <param name="obt_Element">Object</param>
+    /// <param name="type">Type of the Object</param>
+    /// <returns>The "ID" of the object</returns>
     string stg_OIE(Object obt_Element, Type type)
     {
         string stgResult = default;
@@ -210,13 +228,37 @@ public class DCFP
     #region Class_To_Text
 
 
-    //CSTC = Convet String To obt_Cls
-    static Object CSTC(string stgData, Type type)
+    //CSTC = Convet String To Class
+    public static object ToClass(string stgData, Type type)
     {
-        Object stgResult = "";
+        Object obj_Result = default;
+        Object obj_Cls = default;
+        
+        if (stgData != null && !(type.Name == "String") && !type.IsPrimitive)
+        {
+            // Se pasa a convertir la data en el objeto
+            // que se espera
+            
+            // obj_Result = 
+        }
+        else
+        {
+            // Regresa un objeto vacio del tipo que se
+            // le esta pasando en caso de que no se
+            // pueda convertir 
+            return obj_Result = default;
+        }
+    
 
-        return stgResult;
+        return obj_Result;
     }
+    
+    
+    
+    
+    
+    
+    
 
 
     #endregion
