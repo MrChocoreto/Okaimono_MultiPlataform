@@ -15,8 +15,9 @@ public class FDS : MonoBehaviour
     //[HideInInspector] public bool bolChanges;
     const string stgDOKDBF = "DOKDB.dcuf"; //DOKDBF = Default OKaimono DataBase File
                                           //.dcuf = Dot Choco Universal File
-    DataBase cls_BD;
-    DCFP cls_DCFP;
+    DataBase cls_BD; //BD = DataBase
+    DCFP cls_DCFP; //DCFP = Dot Choco File Parse
+    CDFM cls_CDFM; //CDFM = Capsule Data File Manager
 
     #endregion
 
@@ -29,6 +30,7 @@ public class FDS : MonoBehaviour
     {
         cls_DCFP = new();
         cls_BD = new();
+        cls_CDFM = new();
     }
 
 
@@ -36,7 +38,7 @@ public class FDS : MonoBehaviour
     void Start()
     {
         stg_Application_Path = Application.persistentDataPath + "/Okaimono/";
-        cls_DCFP = new();
+        // cls_DCFP = new();
         cls_BD.AnimeList.Add(new());
         cls_BD.MangaList.Add(new());
         //Se le da una path a la variable stgApplication_Path desde el Start
@@ -45,8 +47,8 @@ public class FDS : MonoBehaviour
         stg_Application_Path = Application.persistentDataPath + "/Okaimono/";
         //Debug.Log(stgApplication_Path);
         //CreateFile();
-        // SaveData();
-        LoadData();
+        SaveData();
+        // LoadData();
     }
 
 
@@ -60,17 +62,27 @@ public class FDS : MonoBehaviour
     [ContextMenu("SaveData")]
     public void SaveData()
     {
-        Anime anime = new();
-        // anime.Tags.Add("Xd");
-        cls_BD.AnimeList.Add(anime);
-        cls_BD.AnimeList.Add(anime);
-        //le pasamos los datos de la clsBD al stgDOKDB_JsonObj
-        stg_DOKDB_Json = cls_DCFP.ToString(cls_BD); //DCFP = Dot Choco File Parse
-        // JsonUtility.ToJson(stg_DOKDB_Json);
-
+        cls_CDFM = new();
+        cls_BD = new();
+        cls_BD.AnimeList.Add(new());
+        cls_BD.MangaList.Add(new());
+        // Anime anime = new();
+        // cls_BD.AnimeList.Add(anime);
+        // cls_BD.AnimeList.Add(anime);
+        // //le pasamos los datos de la clsBD al stgDOKDB_JsonObj
+        // stg_DOKDB_Json = cls_DCFP.ToString(cls_BD); //DCFP = Dot Choco File Parse
+        // // JsonUtility.ToJson(stg_DOKDB_Json);
         //guarda los datos de la clsBD publica en el Archivo "stgDOKDB_JsonObj" creado
-        File.WriteAllText(stg_Application_Path + stgDOKDBF, stg_DOKDB_Json);
-        Debug.Log(stg_DOKDB_Json);
+        // File.WriteAllText(stg_Application_Path + stgDOKDBF, stg_DOKDB_Json);
+        cls_CDFM.Lists_Obj = new List<object>[2];
+        cls_CDFM.Lists_Obj[0] = new List<object>(){cls_BD.AnimeList};
+        cls_CDFM.Lists_Obj[1] = new List<object>(){cls_BD.MangaList};
+        string[] Subfolders = new string[] { "Anime", "Manga" };
+        
+        
+        cls_CDFM.MainSaver(Subfolders, cls_CDFM.Lists_Obj);
+        
+        // Debug.Log(stg_DOKDB_Json);
     }
     
     
@@ -78,13 +90,16 @@ public class FDS : MonoBehaviour
     [ContextMenu("LoadData")]
     public void LoadData()
     {
-        DataBase cls_BDs = new();
+        // DataBase cls_BDs = new();
         //busca el archivo en la ruta que le pasamos
-        stg_DOKDB_Json = File.ReadAllText(stg_Application_Path + stgDOKDBF);
-        
+        // stg_DOKDB_Json = File.ReadAllText(stg_Application_Path + stgDOKDBF);
         //y aqui le pasa los valores a la clsBD publica 
-        cls_BDs = DCFP.ToClass<DataBase>(stg_DOKDB_Json); //DCFP = Dot Choco File Parse
+        // cls_BDs = DCFP.ToClass<DataBase>(stg_DOKDB_Json); //DCFP = Dot Choco File Parse
         // clsBD = JsonUtility.FromJson<DataBase>(stgDOKDB_JsonObj);
+        
+        
+        
+        
     }
 
 

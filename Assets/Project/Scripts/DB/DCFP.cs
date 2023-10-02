@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
-using UnityEditor;
-using UnityEngine;
-using Object = System.Object;
 
 public class DCFP
 {
@@ -12,9 +9,9 @@ public class DCFP
 
     #region Variables
 
-    const string stg_IMF = "<mdf>\n"; // IMF = Input Main Flag
-                                      // mdf = Main Data Flag
-    const string stg_OMF = "\n</mdf>\n"; // OMF = Output Main Flag
+    const string stg_IMF = "<mdf>\n"; // IMF = Input MainSaver Flag
+                                      // mdf = MainSaver Data Flag
+    const string stg_OMF = "\n</mdf>\n"; // OMF = Output MainSaver Flag
 
     #endregion
 
