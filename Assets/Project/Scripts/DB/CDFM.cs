@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using Object = System.Object;
 
@@ -14,6 +15,7 @@ public class CDFM
     public List<Object>[] Lists_Obj;
     string MainPath;
     string[] SubPaths;
+    string SimplePath;
     
     #endregion
 
@@ -34,7 +36,7 @@ public class CDFM
     public void MainSaver(string MainFolder, string[] Subfolders, List<Object>[] lst_Lists_Obj)
     {
         FolderPaths(MainFolder,Subfolders);
-        CreateFolders();
+        CreateJars(lst_Lists_Obj);
     }
     
     
@@ -43,7 +45,7 @@ public class CDFM
     {
         string MainFolder = default;
         FolderPaths(MainFolder,Subfolders);
-        CreateFolders();
+        CreateJars(lst_Lists_Obj);
     }
     
     
@@ -61,31 +63,61 @@ public class CDFM
 
 
 
-    void CreateFolders()
+    void CreateJars(List<Object>[] Capsules)
     {
         if (!Directory.Exists(MainPath))
-        {
             Directory.CreateDirectory(MainPath);
-        }
-        else
-        {
-            Debug.Log(MainPath);
-        }
 
         foreach (var subPath in SubPaths)
         {
             if (!Directory.Exists(subPath))
-            {
                 Directory.CreateDirectory(subPath);
-            }
-            else
+        }
+        CreateCapsules(SubPaths, Capsules);
+    }
+
+
+    
+    void CreateCapsules(string[] Paths, List<Object>[] Capsules)
+    {
+        int counte = 0;
+        foreach (var capsule in Capsules)
+        {
+            capsule.ForEach(x =>
             {
-                Debug.Log(subPath);
-            }
+                IList<object> lst_Capsule_Class = new List<object>();
+                if (x is IEnumerable<object> enumerable)
+                {
+                    lst_Capsule_Class = enumerable.ToList();
+                    foreach (var w in lst_Capsule_Class)
+                    {
+                        foreach (var newpath in Paths)
+                        {
+                            if(newpath.Contains(w.GetType().Name))
+                            SimplePath = newpath;
+                        }
+                        CapsuleDirectory(SimplePath, $"{w.GetType().Name}_{counte}", w);
+                        counte++;
+                        Debug.Log(w.GetType().Name);
+                    }
+                }
+                
+            });
+            
+            counte = 0;
         }
     }
+
     
-    
+    void CapsuleDirectory(string Path, string NameFile, Object Capsule)
+    {
+        string Full_Path = $"{Path}/{NameFile}";
+        StreamWriter streamWriter;
+        streamWriter = new StreamWriter(Full_Path);
+        streamWriter.Write(JsonUtility.ToJson(Capsule));
+        streamWriter.Close();
+        
+    }
     
     
     #endregion

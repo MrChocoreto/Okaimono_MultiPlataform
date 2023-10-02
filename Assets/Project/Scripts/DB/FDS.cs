@@ -39,8 +39,6 @@ public class FDS : MonoBehaviour
     {
         stg_Application_Path = Application.persistentDataPath + "/Okaimono/";
         // cls_DCFP = new();
-        cls_BD.AnimeList.Add(new());
-        cls_BD.MangaList.Add(new());
         //Se le da una path a la variable stgApplication_Path desde el Start
         //ya que de este modo me aseguro de tener la ruta correcta y no tener
         //problemas con la carga de datos
@@ -62,26 +60,36 @@ public class FDS : MonoBehaviour
     [ContextMenu("SaveData")]
     public void SaveData()
     {
+        Anime anime = new();
+        Anime anim = new();
+        Anime animew = new();
+        anime.Name = "Naruto";
+        anim.Name = "Bleach";
+        animew.Name = "One Piece";
         cls_CDFM = new();
         cls_BD = new();
-        cls_BD.AnimeList.Add(new());
+        cls_BD.AnimeList.Add(anime);
+        cls_BD.AnimeList.Add(anim);
+        cls_BD.AnimeList.Add(animew);
         cls_BD.MangaList.Add(new());
-        // Anime anime = new();
-        // cls_BD.AnimeList.Add(anime);
-        // cls_BD.AnimeList.Add(anime);
-        // //le pasamos los datos de la clsBD al stgDOKDB_JsonObj
-        // stg_DOKDB_Json = cls_DCFP.ToString(cls_BD); //DCFP = Dot Choco File Parse
-        // // JsonUtility.ToJson(stg_DOKDB_Json);
-        //guarda los datos de la clsBD publica en el Archivo "stgDOKDB_JsonObj" creado
-        // File.WriteAllText(stg_Application_Path + stgDOKDBF, stg_DOKDB_Json);
+        cls_BD.MangaList.Add(new());
+        
+        
         cls_CDFM.Lists_Obj = new List<object>[2];
         cls_CDFM.Lists_Obj[0] = new List<object>(){cls_BD.AnimeList};
         cls_CDFM.Lists_Obj[1] = new List<object>(){cls_BD.MangaList};
         string[] Subfolders = new string[] { "Anime", "Manga" };
         
-        
         cls_CDFM.MainSaver(Subfolders, cls_CDFM.Lists_Obj);
         
+        
+        
+        
+        // //le pasamos los datos de la clsBD al stgDOKDB_JsonObj
+        // stg_DOKDB_Json = cls_DCFP.ToString(cls_BD); //DCFP = Dot Choco File Parse
+        // // JsonUtility.ToJson(stg_DOKDB_Json);
+        //guarda los datos de la clsBD publica en el Archivo "stgDOKDB_JsonObj" creado
+        // File.WriteAllText(stg_Application_Path + stgDOKDBF, stg_DOKDB_Json);
         // Debug.Log(stg_DOKDB_Json);
     }
     
