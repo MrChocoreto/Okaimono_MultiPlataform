@@ -69,7 +69,7 @@ public class DCFP
     #region Private_Methods
 
 
-    #region Text_To_Class
+    #region Class_To_Text
 
 
     /// <summary>
@@ -101,7 +101,6 @@ public class DCFP
     /// <returns>Content of the Class</returns>
     string Stg_EIFC(object cls, Type type)
     {
-        string stg_Class_List;
         string stg_Result = default;
         string stg_Item_Type;
         string stg_Item;
@@ -200,14 +199,14 @@ public class DCFP
 
 
 
-    #region Class_To_Text
+    #region Text_To_Class
 
 
     //CSTC = Convet String To Class
     public static object ToClass(string stgData, Type type)
     {
         Object obj_Result = default;
-        Object obj_Cls = default;
+        // Object obj_Cls = default;
         
         if (stgData != null && !(type.Name == "String") && !type.IsPrimitive)
         {
