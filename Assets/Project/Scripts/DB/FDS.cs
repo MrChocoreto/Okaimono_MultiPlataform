@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class FDS : MonoBehaviour
 {
@@ -46,12 +44,23 @@ public class FDS : MonoBehaviour
     [ContextMenu("SaveData")]
     public void SaveData()
     {
-        cls_CDFM.Lists_Obj = new List<object>[2];
-        cls_CDFM.Lists_Obj[0] = new List<object>(){cls_BD.AnimeList};
-        cls_CDFM.Lists_Obj[1] = new List<object>(){cls_BD.MangaList};
-        string[] Subfolders = new string[] { "Anime", "Manga" };
+        Anime anime= new();
+        cls_DCFP = new();
+        cls_BD = new();
+
+        anime.Name = "Dragon Ball";
+        cls_BD.AnimeList.Add(anime);
+        // cls_CDFM.Lists_Obj = new List<object>[2];
+        // cls_CDFM.Lists_Obj[0] = new List<object>(){cls_BD.AnimeList};
+        // cls_CDFM.Lists_Obj[1] = new List<object>(){cls_BD.MangaList};
+        // string[] Subfolders = new string[] { "Anime", "Manga" };
         
-        cls_CDFM.MainSaver(Subfolders, cls_CDFM.Lists_Obj);
+        // cls_CDFM.MainSaver(Subfolders, cls_CDFM.Lists_Obj);
+        Debug.Log(cls_DCFP.ToDataFile(cls_BD));
+        DCFP dCFP = new();
+        dCFP.ToDataClass<DataBase>("");
+        JsonUtility.FromJson<DataBase>("");
+
     }
     
     
