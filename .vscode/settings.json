@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Okaimono_MultiPlataform.sln"
+    "dotnet.defaultSolution": "Okaimono_MultiPlataform.sln",
+    "dotnet.preferCSharpExtension": true
 }

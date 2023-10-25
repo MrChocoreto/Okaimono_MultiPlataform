@@ -22,13 +22,13 @@ public class FDS : MonoBehaviour
     #region Unity_Methods
 
 
-    void Awake()
+    private void Awake()
     {
         cls_CDFM = new();
         cls_BD = new();
     }
 
-    void Start()
+    private void Start()
     {
         COLD();
     }
@@ -78,3 +78,4 @@ public class FDS : MonoBehaviour
 
 
 }
+
