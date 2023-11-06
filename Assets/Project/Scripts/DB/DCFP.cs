@@ -56,9 +56,9 @@ public class DCFP
         return (T)ToDataClass(stgData, typeof(T));
     }
 
-    public static object ToDataClass(string stgData, Type type)
+    static object ToDataClass(string stgData, Type type)
     {
-        return null;
+        return ToClass(stgData, type);
     }
 
 

@@ -9,6 +9,7 @@ public class DataBase
 
 public class Anime
 {
+    public string Id = "Unknown";
     public string Name = "Unknown";
     public List<string> Tags = new() { "None" };
     public bool InLive = false;
@@ -25,6 +26,7 @@ public class Anime
 
 public class Manga
 {
+    public string Id = "Unknown";
     public string Name = "Unknown";
     public List<string> Tags = new() { "None" };
     public bool OnGoing = false;

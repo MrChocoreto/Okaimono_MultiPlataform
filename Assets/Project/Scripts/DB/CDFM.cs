@@ -16,6 +16,7 @@ public class CDFM
     
     #endregion
 
+
     #region MyMethods
 
     #region DataSaver
@@ -80,8 +81,9 @@ public class CDFM
                     {
                         foreach (var newpath in Paths)
                         {
-                            if(newpath.Contains(w.GetType().Name))
-                            SimplePath = newpath;
+                            if(newpath.Contains(w.GetType().Name)){
+                              SimplePath = newpath;
+                            }
                         }
                         CapsuleDirectory(SimplePath, $"{w.GetType().Name}_{counte}", w);
                         counte++;
@@ -107,6 +109,8 @@ public class CDFM
     
     
     #endregion
+
+
     
     #region DataLoader
 
