@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Object = System.Object;
 
 public class FDS : MonoBehaviour
 {
@@ -8,12 +9,11 @@ public class FDS : MonoBehaviour
 
     #region Variables
 
-    [HideInInspector] const string stg_App_Path = "/Okaimono/"; //Path de la carpeta donde se guardara el archivo
-    const string stgDOKDBF = "DOKDB.dcuf"; //DOKDBF = Default OKaimono DataBase File
+    [HideInInspector] const string PATH = "/Okaimono/"; //Path de la carpeta donde se guardara el archivo
+    const string DBFILE = "DOKDB.dcuf"; //DBFILE = Default OKaimono DataBase File
                                           //.dcuf = Dot Choco Universal File
-    DataBase cls_BD; //BD = DataBase
-    DCFP cls_DCFP; //DCFP = Dot Choco File Parse
-    CDFM cls_CDFM; //CDFM = Capsule Data File Manager
+    [SerializeField] DataBase DB; //BD = DataBase
+    CDFM FileManager; //CDFM = Capsule Data File Manager
 
     #endregion
 
@@ -21,18 +21,12 @@ public class FDS : MonoBehaviour
 
     #region Unity_Methods
 
-
-    private void Awake()
-    {
-        cls_CDFM = new();
-        cls_BD = new();
-    }
-
     private void Start()
     {
+        FileManager = new();
+        DB = new();
         COLD();
     }
-
 
     #endregion
 
@@ -44,12 +38,12 @@ public class FDS : MonoBehaviour
     [ContextMenu("SaveData")]
     public void SaveData()
     {
-        cls_CDFM.Lists_Obj = new List<object>[2];
-        cls_CDFM.Lists_Obj[0] = new List<object>(){cls_BD.AnimeList};
-        cls_CDFM.Lists_Obj[1] = new List<object>(){cls_BD.MangaList};
+        List<Object>[] Lists_Obj = new List<Object>[2];
+        Lists_Obj[0] = new List<object>(){DB.AnimeList};
+        Lists_Obj[1] = new List<object>(){DB.MangaList};
         string[] Subfolders = new string[] { "Anime", "Manga" };
         
-        cls_CDFM.MainSaver(Subfolders, cls_CDFM.Lists_Obj);
+        FileManager.DataSaver(Subfolders, Lists_Obj);
     }
     
     
@@ -58,7 +52,7 @@ public class FDS : MonoBehaviour
     public void LoadData()
     {
         string[] Subfolders = new string[] { "Anime", "Manga" };
-        cls_BD =  cls_CDFM.MainLoader(Subfolders);
+        DB =  FileManager.DataLoader(Subfolders);
     }
 
 
@@ -66,7 +60,7 @@ public class FDS : MonoBehaviour
     void COLD()
     {
         //Si no existe la carpeta de la aplicacion la creara y guardara los datos
-        if (!Directory.Exists(Application.persistentDataPath + stg_App_Path))
+        if (!Directory.Exists(Application.persistentDataPath + PATH))
             SaveData();
         //Caso contrario solo cargara los datos
         else 

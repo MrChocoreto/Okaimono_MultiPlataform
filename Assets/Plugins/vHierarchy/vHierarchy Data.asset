@@ -34,7 +34,7 @@ MonoBehaviour:
         - GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-831353528-0
         - GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-693987375-0
         - GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-361387366-0
-        - GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-3972035161337854471-82036162
+        - GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-1807865066-0
         - GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-1283145730-0
         - GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-1379563868-0
         - GlobalObjectId_V1-2-9fc0d4010bbf28b4594072e72b8655ab-695352500-0
@@ -59,10 +59,10 @@ MonoBehaviour:
         - iColor: 1
           icon: Canvas Icon
         - iColor: 5
-          icon: cs Script Icon
+          icon: AvatarMask On Icon
         - iColor: 0
           icon: Canvas Icon
-        - iColor: 1
+        - iColor: 5
           icon: cs Script Icon
         - iColor: 1
           icon: Camera Icon
@@ -74,8 +74,8 @@ MonoBehaviour:
           icon: EventSystem Icon
         - iColor: 0
           icon: 
-        - iColor: 0
-          icon: 
+        - iColor: 1
+          icon: Folder Icon
         - iColor: 0
           icon: Canvas Icon
         - iColor: 0
@@ -84,7 +84,7 @@ MonoBehaviour:
           icon: cs Script Icon
         - iColor: 3
           icon: 
-        - iColor: 8
+        - iColor: 0
           icon: 
         - iColor: 0
           icon: EventSystem Icon
@@ -93,7 +93,7 @@ MonoBehaviour:
         - iColor: 7
           icon: StandaloneInputModule Icon
       goDatasByInstanceId:
-        keys: 22f5fffffef4ffff30f1ffff34c8ffff625a0000845a00007c5a00008c5a00006a5a00005c5a0000745a0000925a0000b651ffff0447ffff0a3dffff9236ffff605900007e590000b0590000da59000076590000bc590000a8590000c45900009659000066590000a0590000ce5900008a590000825900006c59000002fbffff44f9ffffc8f4ffffd2d8ffff34d8ffffb6d7ffffc2c8ffff0ec7ffff46b9ffff
+        keys: 22f5fffffef4ffff30f1ffff34c8ffff625a0000845a00007c5a00008c5a00006a5a00005c5a0000745a0000925a0000b651ffff0447ffff0a3dffff9236ffff605900007e590000b0590000da59000076590000bc590000a8590000c45900009659000066590000a0590000ce5900008a590000825900006c59000002fbffff44f9ffffc8f4ffffd2d8ffff34d8ffffb6d7ffffc2c8ffff0ec7ffff46b9fffff05800002459000068590000065900008859000042590000f658000054590000b85900003659000028590000fc58000096faffff745900009059000030590000145900001c590000805900000e5900005c5900006ad2ffffe2580000165900005a590000ba590000f85800007a590000525900009259000034590000e858000046590000aa5900001a590000ee580000b65900002259000072590000005900004e590000
         values:
         - iColor: 0
           icon: cs Script Icon
@@ -127,8 +127,8 @@ MonoBehaviour:
           icon: 
         - iColor: 0
           icon: 
-        - iColor: 5
-          icon: cs Script Icon
+        - iColor: 1
+          icon: Canvas Icon
         - iColor: 1
           icon: Folder Icon
         - iColor: 1
@@ -141,20 +141,20 @@ MonoBehaviour:
           icon: PreMatQuad
         - iColor: 1
           icon: Canvas Icon
-        - iColor: 5
-          icon: cs Script Icon
         - iColor: 0
           icon: Canvas Icon
-        - iColor: 1
-          icon: cs Script Icon
-        - iColor: 1
-          icon: Camera Icon
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 5
+          icon: AvatarMask On Icon
         - iColor: 0
           icon: 
         - iColor: 0
           icon: Canvas Icon
         - iColor: 0
-          icon: EventSystem Icon
+          icon: Canvas Icon
         - iColor: 0
           icon: 
         - iColor: 0
@@ -169,6 +169,88 @@ MonoBehaviour:
           icon: 
         - iColor: 8
           icon: 
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 4
+          icon: cs Script Icon
+        - iColor: 7
+          icon: StandaloneInputModule Icon
+        - iColor: 5
+          icon: cs Script Icon
+        - iColor: 1
+          icon: Folder Icon
+        - iColor: 1
+          icon: Folder Icon
+        - iColor: 3
+          icon: 
+        - iColor: 9
+          icon: PreMatQuad
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 5
+          icon: cs Script Icon
+        - iColor: 1
+          icon: Camera Icon
+        - iColor: 0
+          icon: 
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: 
+        - iColor: 0
+          icon: 
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 1
+          icon: cs Script Icon
+        - iColor: 3
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: 
+        - iColor: 7
+          icon: StandaloneInputModule Icon
+        - iColor: 1
+          icon: Folder Icon
+        - iColor: 5
+          icon: cs Script Icon
+        - iColor: 1
+          icon: Folder Icon
+        - iColor: 1
+          icon: Folder Icon
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 9
+          icon: PreMatQuad
+        - iColor: 9
+          icon: PreMatQuad
+        - iColor: 1
+          icon: Canvas Icon
+        - iColor: 5
+          icon: AvatarMask On Icon
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 5
+          icon: cs Script Icon
+        - iColor: 1
+          icon: Camera Icon
+        - iColor: 0
+          icon: 
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: 
+        - iColor: 1
+          icon: Folder Icon
+        - iColor: 1
+          icon: cs Script Icon
         - iColor: 0
           icon: EventSystem Icon
         - iColor: 4

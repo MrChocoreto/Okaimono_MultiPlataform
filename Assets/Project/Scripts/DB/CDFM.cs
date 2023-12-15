@@ -9,102 +9,88 @@ public class CDFM
 {
     #region Variables
 
-    public List<Object>[] Lists_Obj;
     string MainPath;
     string[] SubPaths;
-    string SimplePath;
     
     #endregion
 
 
     #region MyMethods
 
-    #region DataSaver
+    #region Save_Data
     
-    public void MainSaver(string MainFolder, string[] Subfolders, List<Object>[] lst_Lists_Obj)
+    public void DataSaver(string[] Subfolders, List<Object>[] Package, string MainFolder = default)
     {
         FolderPaths(MainFolder,Subfolders);
-        CreateJars(lst_Lists_Obj);
+        CreateJars(Package);
     }
-    
-    
-    
-    public void MainSaver(string[] Subfolders, List<Object>[] lst_Lists_Obj)
-    {
-        string MainFolder = default;
-        FolderPaths(MainFolder,Subfolders);
-        CreateJars(lst_Lists_Obj);
-    }
-    
-    
-    
+
+
+    Func<string[], string, string[]> NewPaths = (array, MainFolder) => {
+        array.ToList().ForEach(str => str = $"{MainFolder}/{str}");
+        return array;
+    };
+
+
     void FolderPaths(string MainFol, string[] SubFol = default)
     {
-        MainPath = MainFol == "" ? $"{Application.persistentDataPath}/{MainPath}" : $"{Application.persistentDataPath}/DataBase";
-        Func<string[],string[]> NewPaths = (a) =>{
-            for (var i = 0; i < a.Length; i++)
-                SubPaths[i] = $"{MainPath}/{a[i]}";
-            return a;
-        };
-        SubPaths = SubFol == default ? NewPaths(SubFol) : new string[] { $"{MainPath}/Anime", $"{MainPath}/Manga"};
+        MainPath = MainFol == default ? $"{Application.persistentDataPath}/{MainPath}" 
+                                 : $"{Application.persistentDataPath}/DataBase";
+
+        SubPaths = SubFol == default ? NewPaths(SubFol, MainPath) 
+                 : new string[] { $"{MainPath}/Anime", $"{MainPath}/Manga"};
     }
 
 
 
-    void CreateJars(List<Object>[] Capsules)
+    void CreateJars(List<Object>[] Package)
     {
         if (!Directory.Exists(MainPath))
             Directory.CreateDirectory(MainPath);
 
         foreach (var subPath in SubPaths)
-        {
             if (!Directory.Exists(subPath))
                 Directory.CreateDirectory(subPath);
-        }
-        CreateCapsules(SubPaths, Capsules);
+
+        CreateCapsules(SubPaths, Package);
     }
 
 
     
-    void CreateCapsules(string[] Paths, List<Object>[] Capsules)
+    void CreateCapsules(string[] Paths, List<Object>[] Package)
     {
-        int counte = 0;
-        foreach (var capsule in Capsules)
-        {
-            capsule.ForEach(x =>
-            {
-                IList<object> lst_Capsule_Class = new List<object>();
-                if (x is IEnumerable<object> enumerable)
-                {
-                    lst_Capsule_Class = enumerable.ToList();
-                    foreach (var w in lst_Capsule_Class)
-                    {
-                        foreach (var newpath in Paths)
-                        {
-                            if(newpath.Contains(w.GetType().Name)){
-                              SimplePath = newpath;
-                            }
-                        }
-                        CapsuleDirectory(SimplePath, $"{w.GetType().Name}_{counte}", w);
-                        counte++;
-                    }
-                }
-                
+        int counter = 0;
+        Package.ToList().ForEach(Box =>{
+            Box.ForEach(Capsules =>{
+                IList<object> ListOfCapsules = new List<object>();
+                if (Capsules is IEnumerable<object> EnumCapsules)
+                    Save(EnumCapsules, ListOfCapsules, Paths, counter);
             });
-            
-            counte = 0;
-        }
+            counter = 0;
+        });
     }
 
-    
-    void CapsuleDirectory(string Path, string NameFile, Object Capsule)
+    void Save(IEnumerable<object> enumerable, IList<object> Capsules, string[] Paths, int counter)
     {
-        string Full_Path = $"{Path}/{NameFile}";
-        StreamWriter streamWriter;
-        streamWriter = new StreamWriter(Full_Path);
+        string SimplePath = default;
+        Capsules = enumerable.ToList();
+        Capsules.ToList().ForEach(Capsule => {
+            Paths.ToList().ForEach(path => {
+                if (path.Contains(Capsule.GetType().Name))
+                    SimplePath = $"{path}/{Capsule.GetType().Name}_{counter}.json";
+            });
+            WriteCapsule(SimplePath, Capsule);
+            counter++;
+        });
+    }
+
+
+
+    void WriteCapsule(string Path, Object Capsule)
+    {
+        StreamWriter streamWriter = new(Path);
         streamWriter.Write(JsonUtility.ToJson(Capsule));
         streamWriter.Close();
-        
     }
     
     
@@ -112,57 +98,45 @@ public class CDFM
 
 
     
-    #region DataLoader
+    #region Load_Data
 
-    public DataBase MainLoader(string MainFolder, string[] Subfolders)
+    public DataBase DataLoader(string[] Subfolders, string MainFolder = default)
     {
-        DataBase cls_BD = new();
         FolderPaths(MainFolder,Subfolders);
-        cls_BD = LoadCapsule();
-        return cls_BD;
+        return LoadCapsule();
     }
-    
-    public DataBase MainLoader(string[] Subfolders)
-    {
-        DataBase cls_BD = new();
-        string MainFolder = default;
-        FolderPaths(MainFolder,Subfolders);
-        cls_BD = LoadCapsule();
-        return cls_BD;
-    }
+
 
     DataBase LoadCapsule()
     {
-        DataBase cls_BD = new();
+        DataBase BD = new();
         string str_Json = default;
         string[] Files = default;
         StreamReader streamReader;
         
         if (Directory.Exists(MainPath))
-            foreach (var subPath in SubPaths)
-            {
-                if (!File.Exists(subPath))
-                {
+            SubPaths.ToList().ForEach(subPath =>{
+                if (!File.Exists(subPath)){
                     Files = Directory.GetFiles(subPath);
 
                     if (subPath.Contains("Anime"))
-                        foreach (var file in Files){
+                        Files.ToList().ForEach(file =>{
                             streamReader = new(file);
                             str_Json = streamReader.ReadToEnd();
-                            cls_BD.AnimeList.Add(JsonUtility.FromJson<Anime>(str_Json));
+                            BD.AnimeList.Add(JsonUtility.FromJson<Anime>(str_Json));
                             streamReader.Close();
-                        }
-                    
+                        });
+
                     else if (subPath.Contains("Manga"))
-                        foreach (var file in Files){
+                        Files.ToList().ForEach(file =>{
                             streamReader = new(file);
                             str_Json = streamReader.ReadToEnd();
-                            cls_BD.MangaList.Add(JsonUtility.FromJson<Manga>(str_Json));
+                            BD.MangaList.Add(JsonUtility.FromJson<Manga>(str_Json));
                             streamReader.Close();
-                        }
+                        });
                 }
-            }
-        return cls_BD;
+            });
+        return BD;
     }
 
     #endregion
